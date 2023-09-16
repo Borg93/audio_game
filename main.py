@@ -32,18 +32,14 @@ if __name__ == "__main__":
     container_factory = ContainerFactory(item_factory)
     npc_factory = NPCFactory(item_factory)
 
-    factory = GameObjectFactory(
-        item_factory, mechanism_factory, container_factory, npc_factory
-    )
+    factory = GameObjectFactory(item_factory, mechanism_factory, container_factory, npc_factory)
 
     game_loader = GameDataLoader(factory)
     player = game_loader.load_player(game_data["player"])
     rooms = game_loader.load_room(game_data["rooms"])
 
     game_state = GameState(rooms, player)
-    winning_condition_checker = WinningConditionChecker(
-        game_data["winning_conditions"], game_state
-    )
+    winning_condition_checker = WinningConditionChecker(game_data["winning_conditions"], game_state)
 
     game = GameEngine(game_state, winning_condition_checker)
 
@@ -65,15 +61,15 @@ if __name__ == "__main__":
     )
     pretty_print(game_state.state)
 
-    # # Player picks up the uniform from the shelf
-    # game.take_action(
-    #     PickUpCommand(
-    #         game_state.player,
-    #         game_state.current_room,
-    #         item_name="uniform",
-    #         target=game_state.container_items["shelf"],
-    #     )
-    # )
+    # Player picks up the uniform from the shelf
+    game.take_action(
+        PickUpCommand(
+            game_state.player,
+            game_state.current_room,
+            item_name="uniform",
+            target=["shelf"],
+        )
+    )
 
     # pretty_print(game_state.get_state())
 

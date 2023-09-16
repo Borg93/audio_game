@@ -1,7 +1,7 @@
 from typing import List, Dict
-from .item import Item
-from .container import Container
-from .npc import NPC
+from .interactables.item import Item
+from .interactables.container import Container
+from .interactables.npc import NPC
 
 
 class Room:
@@ -17,12 +17,7 @@ class Room:
         items_str = ", ".join([item.name for item in self.items])
         npcs_str = ", ".join([npc.name for npc in self.npcs])
         containers_str = ", ".join([container.name for container in self.containers])
-        exits_str = ", ".join(
-            [
-                f"{direction} to {room_name}"
-                for direction, room_name in self.exits.items()
-            ]
-        )
+        exits_str = ", ".join([f"{direction} to {room_name}" for direction, room_name in self.exits.items()])
 
         return (
             f"Room(name={self.name}, description={self.description}, "
@@ -37,11 +32,7 @@ class Room:
 
     def find_container(self, container_name):
         return next(
-            (
-                container
-                for container in self.containers
-                if container.name == container_name
-            ),
+            (container for container in self.containers if container.name == container_name),
             None,
         )
 
@@ -52,15 +43,8 @@ class Room:
         items_str = ", ".join([item.name for item in self.items])
         npcs_str = ", ".join([npc.name for npc in self.npcs])
         containers_str = ", ".join([container.name for container in self.containers])
-        return (
-            f"Items: [{items_str}], NPCs: [{npcs_str}], Containers: [{containers_str}]"
-        )
+        return f"Items: [{items_str}], NPCs: [{npcs_str}], Containers: [{containers_str}]"
 
     def available_exits(self):
-        exits_str = ", ".join(
-            [
-                f"{direction} to {room_name}"
-                for direction, room_name in self.exits.items()
-            ]
-        )
+        exits_str = ", ".join([f"{direction} to {room_name}" for direction, room_name in self.exits.items()])
         return f"Available exits: [{exits_str}]"

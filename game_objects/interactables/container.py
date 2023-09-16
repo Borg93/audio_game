@@ -20,16 +20,11 @@ class Container(Interactable):
         return self.__str__()
 
     def interact(self, game_engine):
-        print(
-            f"Items in {self.name} before interaction: {[item.name for item in self.contained_items]}"
-        )  # Debug line
+        print(f"Items in {self.name} before interaction: {[item.name for item in self.contained_items]}")  # Debug line
+
         if self.contained_items:
-            response = f"You inspect the {self.name} and find: {', '.join([item.name for item in self.contained_items])}."
-            room = next(room for room in game_engine.rooms if self in room.containers)
-            room.items.extend(self.contained_items)
-            self.contained_items = []
-            print(
-                f"Items in {self.name} after interaction: {self.contained_items}"
-            )  # Debug line
-            return response
+            return f"You inspect the {self.name} and find: {', '.join([item.name for item in self.contained_items])}."
         return f"You interacted with {self.name}, but it's empty."
+
+    def find_item(self, item_name: str):
+        return next((item for item in self.contained_items if item.name == item_name), None)

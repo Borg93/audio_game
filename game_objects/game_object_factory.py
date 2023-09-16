@@ -1,4 +1,6 @@
-from .interactables import Room, Container, Player, NPC, Item, Mechanism, Condition
+from .interactables import Container, NPC, Item, Mechanism, Condition
+from room import Room
+from player import Player
 
 
 class ItemFactory:
@@ -38,8 +40,7 @@ class ContainerFactory:
         name = container_data.get("name", "Unnamed")
         description = container_data.get("description", "No Description")
         contained_items = [
-            self.item_factory.create(item_data)
-            for item_data in container_data.get("contained_items", [])
+            self.item_factory.create(item_data) for item_data in container_data.get("contained_items", [])
         ]
         return name, description, contained_items
 
@@ -63,10 +64,7 @@ class NPCFactory:
         description = npc_data.get("description", "No Description")
         interaction_response = npc_data.get("interaction_response", "No Response")
 
-        contained_items = [
-            self.item_factory.create(item_data)
-            for item_data in npc_data.get("contained_items", [])
-        ]
+        contained_items = [self.item_factory.create(item_data) for item_data in npc_data.get("contained_items", [])]
 
         condition_data = npc_data.get("condition", None)
         condition = None
@@ -116,18 +114,14 @@ class GameObjectFactory:
             return self.item_factory.create(item_data)
 
     def _create_containers(self, containers_data):
-        return [
-            self.container_factory.create(container) for container in containers_data
-        ]
+        return [self.container_factory.create(container) for container in containers_data]
 
     def _create_npcs(self, npcs_data):
         return [self.npc_factory.create(npc) for npc in npcs_data]
 
     def create_player(self, player_data):
         starting_inventory = self._create_items(player_data.get("inventory", []))
-        return Player(
-            player_data["name"], player_data["starting_location"], starting_inventory
-        )
+        return Player(player_data["name"], player_data["starting_location"], starting_inventory)
 
     def _create_items(self, items_data):
         return [self.item_factory.create(item) for item in items_data]

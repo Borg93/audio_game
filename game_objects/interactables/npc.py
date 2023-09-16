@@ -24,32 +24,24 @@ class NPC(Interactable):
             return "The NPC doesn't want to talk to you right now."
 
         # Debug line to print items in the NPC before interaction
-        print(
-            f"Items in {self.name} before interaction: {[item.name for item in self.contained_items]}"
-        )
+        print(f"Items in {self.name} before interaction: {[item.name for item in self.contained_items]}")
 
         if hasattr(self, "contained_items") and self.contained_items:
             # Find the room where the NPC is located
             room = next(room for room in game_engine.rooms if self in room.npcs)
 
             # Debug line to print items in the room before adding
-            print(
-                f"Items in {room.name} before adding: {[item.name for item in room.items]}"
-            )
+            print(f"Items in {room.name} before adding: {[item.name for item in room.items]}")
 
             # Move items from the NPC to the room
             room.items.extend(self.contained_items)
 
             # Debug line to print items in the room after adding
-            print(
-                f"Items in {room.name} after adding: {[item.name for item in room.items]}"
-            )
+            print(f"Items in {room.name} after adding: {[item.name for item in room.items]}")
 
             self.contained_items = []
 
             # Debug line to print items in the NPC after interaction
-            print(
-                f"Items in {self.name} after interaction: {[item.name for item in self.contained_items]}"
-            )
+            print(f"Items in {self.name} after interaction: {[item.name for item in self.contained_items]}")
 
         return self.interaction_response

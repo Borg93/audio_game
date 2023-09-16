@@ -31,9 +31,5 @@ class InspectCommand(Command):
         return name == "inventory"
 
     def _find_inspectable_description(self, name):
-        inspectable = (
-            self.room.find_item(name)
-            or self.room.find_container(name)
-            or self.room.find_npc(name)
-        )
+        inspectable = self.room.find_item(name) or self.room.find_container(name) or self.room.find_npc(name)
         return inspectable.description if inspectable else None
