@@ -1,4 +1,4 @@
-from mechanism import Mechanism
+from .mechanism import Mechanism
 
 
 # Condition
@@ -7,6 +7,12 @@ class Condition:
         self.required_items = required_items or []
         self.required_mechanisms = required_mechanisms or {}
         self.expected_password = password
+
+    def __str__(self):
+        return f"Condition(required_items={self.required_items}, required_mechanisms={self.required_mechanisms}, expected_password={self.expected_password})"
+
+    def __repr__(self):
+        return self.__str__()
 
     def is_met(self, player_inventory, rooms, provided_password=None):
         return (

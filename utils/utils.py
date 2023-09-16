@@ -6,4 +6,4 @@ def pretty_print(response):
                 print(f"  - {item}")
         else:
             print(f"{key.capitalize()}: {value}")
-    print("-" * 50)  # separator line for clarity
+    print("-" * 100)  # separator line for clarity

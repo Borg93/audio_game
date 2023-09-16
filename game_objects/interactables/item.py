@@ -1,15 +1,20 @@
-from base_interactable import Interactable
-from npc import NPC
-from player import Player
-from container import Container
-from room import Room
+from .base_interactable import Interactable
+from .npc import NPC
+from .player import Player
+from .container import Container
+from .room import Room
 
 
 class Item(Interactable):
-    def __init__(self, name, description, is_movable=True):
-        self.name = name
-        self.description = description
+    def __init__(self, name: str, description: str, is_movable: bool = True):
+        super().__init__(name, description)
         self.is_movable = is_movable
+
+    def __str__(self):
+        return f"Item(name={self.name}, description={self.description}, is_movable={self.is_movable})"
+
+    def __repr__(self):
+        return self.__str__()
 
     def interact(self, target=None):
         return f"You tried to use {self.name}, but nothing happened."

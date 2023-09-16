@@ -1,4 +1,4 @@
-from interactables.base_interactable import Interactable
+from .base_interactable import Interactable
 
 
 class Mechanism(Interactable):
@@ -8,6 +8,12 @@ class Mechanism(Interactable):
         self.activated = activated
         self.is_movable = False  # Mechanisms are not movable
         self.activators = activators if activators else []
+
+    def __str__(self):
+        return f"Mechanism(name={self.name}, description={self.description}, activated={self.activated}, activators={self.activators})"
+
+    def __repr__(self):
+        return self.__str__()
 
     def interact(self, item=None):
         if item and item.name in self.activators:

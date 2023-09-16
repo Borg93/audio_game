@@ -1,13 +1,3 @@
-from abc import ABC, abstractmethod
-
-
-# Observer and Observable classes
-class Observer(ABC):
-    @abstractmethod
-    def update(self, observable, *args, **kwargs):
-        pass
-
-
 class Observable:
     def __init__(self):
         self._observers = []

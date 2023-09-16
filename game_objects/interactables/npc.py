@@ -1,13 +1,21 @@
-from base_interactable import Interactable
+from .base_interactable import Interactable
+
+from typing import Optional, List, Union
 
 
 class NPC(Interactable):
-    def __init__(self, name, description, interaction_response, condition=None):
-        self.name = name
-        self.description = description
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        interaction_response: str,
+        contained_items: List[Union["Item", "Mechanism"]],
+        condition: Optional["Condition"] = None,
+    ):
+        super().__init__(name, description)
         self.interaction_response = interaction_response
+        self.contained_items = contained_items
         self.condition = condition
-        self.contained_items = []  # Initialize contained_items as an empty list
 
     def interact(self, game_engine, provided_password=None):
         if self.condition and not self.condition.is_met(

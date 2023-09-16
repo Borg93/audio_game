@@ -1,11 +1,23 @@
-from base_interactable import Interactable
+from .base_interactable import Interactable
+
+from typing import List, Union
 
 
 class Container(Interactable):
-    def __init__(self, name, description, contained_items=None):
-        self.name = name
-        self.description = description
+    def __init__(
+        self,
+        name: str,
+        description: str,
+        contained_items: List[Union["Item", "Mechanism"]] = None,
+    ):
+        super().__init__(name, description)
         self.contained_items = contained_items if contained_items else []
+
+    def __str__(self):
+        return f"Container(name={self.name}, description={self.description}, contained_items={self.contained_items})"
+
+    def __repr__(self):
+        return self.__str__()
 
     def interact(self, game_engine):
         print(
