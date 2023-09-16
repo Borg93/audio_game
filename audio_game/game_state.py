@@ -1,4 +1,6 @@
-from game_objects.interactables import Player, Room
+from .game_objects.room import Room
+from .game_objects.player import Player
+
 from typing import List
 
 
@@ -33,9 +35,7 @@ class GameState:
 
     @property
     def current_room_location(self):
-        return next(
-            (room for room in self.rooms if room.name == self.player.location), None
-        )
+        return next((room for room in self.rooms if room.name == self.player.location), None)
 
     @property
     def current_room_location_name(self):

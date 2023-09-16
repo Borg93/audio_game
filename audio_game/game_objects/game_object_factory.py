@@ -1,6 +1,6 @@
 from .interactables import Container, NPC, Item, Mechanism, Condition
-from room import Room
-from player import Player
+from .room import Room
+from .player import Player
 
 
 class ItemFactory:

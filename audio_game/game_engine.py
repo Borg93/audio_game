@@ -1,13 +1,11 @@
-from utils.observer import Observable
-from utils.winning_condition import WinningConditionChecker
-from game_state import GameState
-from components.commands.base_command import Command
+from .utils.observer import Observable
+from .utils.winning_condition import WinningConditionChecker
+from .game_state import GameState
+from .components.commands.base_command import Command
 
 
 class GameEngine(Observable):
-    def __init__(
-        self, game_state: GameState, winning_condition_checker: WinningConditionChecker
-    ):
+    def __init__(self, game_state: GameState, winning_condition_checker: WinningConditionChecker):
         super().__init__()  # Initialize the Observable part of GameEngine
         self.game_state = game_state
         self.winning_condition_checker = winning_condition_checker

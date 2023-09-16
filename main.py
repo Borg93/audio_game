@@ -1,13 +1,13 @@
-from game_data_loader import GameDataLoader
-from game_engine import GameEngine
-from utils.visualization import Visualization
-from utils.winning_condition import WinningConditionChecker
+from audio_game.game_data_loader import GameDataLoader
+from audio_game.game_engine import GameEngine
+from audio_game.utils.visualization import Visualization
+from audio_game.utils.winning_condition import WinningConditionChecker
 
-from utils.utils import pretty_print
-from game_state import GameState
+from audio_game.utils.utils import pretty_print
+from audio_game.game_state import GameState
 
-from components.commands.inspect_command import InspectCommand
-from components.commands.pick_up_command import PickUpCommand
+from audio_game.components.commands.inspect_command import InspectCommand
+from audio_game.components.commands.pick_up_command import PickUpCommand
 
 #     DropCommand,
 #     TalkCommand,
@@ -15,9 +15,9 @@ from components.commands.pick_up_command import PickUpCommand
 #     UseCommand,
 # )
 
-from game_objects.game_data import game_data
+from audio_game.game_objects.game_data import game_data
 
-from game_objects.game_object_factory import (
+from audio_game.game_objects.game_object_factory import (
     GameObjectFactory,
     ItemFactory,
     MechanismFactory,
@@ -61,15 +61,15 @@ if __name__ == "__main__":
     )
     pretty_print(game_state.state)
 
-    # Player picks up the uniform from the shelf
-    game.take_action(
-        PickUpCommand(
-            game_state.player,
-            game_state.current_room,
-            item_name="uniform",
-            target=["shelf"],
-        )
-    )
+    # # Player picks up the uniform from the shelf
+    # game.take_action(
+    #     PickUpCommand(
+    #         game_state.player,
+    #         game_state.current_room_location,
+    #         item_name="uniform",
+    #         target=["shelf"],
+    #     )
+    # )
 
     # pretty_print(game_state.get_state())
 

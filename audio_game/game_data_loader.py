@@ -1,4 +1,4 @@
-from game_objects.game_object_factory import GameObjectFactory
+from .game_objects.game_object_factory import GameObjectFactory
 
 
 # Updated GameDataLoader
@@ -28,9 +28,7 @@ if __name__ == "__main__":
     container_factory = ContainerFactory(item_factory)
     npc_factory = NPCFactory(item_factory)
 
-    factory = GameObjectFactory(
-        item_factory, mechanism_factory, container_factory, npc_factory
-    )
+    factory = GameObjectFactory(item_factory, mechanism_factory, container_factory, npc_factory)
     game_loader = GameDataLoader(factory)
     player = game_loader.load_player(game_data["player"])
     rooms = game_loader.load_room(game_data["rooms"])
