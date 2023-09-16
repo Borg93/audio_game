@@ -45,6 +45,6 @@ class Room:
         containers_str = ", ".join([container.name for container in self.containers])
         return f"Items: [{items_str}], NPCs: [{npcs_str}], Containers: [{containers_str}]"
 
+    @property
     def available_exits(self):
-        exits_str = ", ".join([f"{direction} to {room_name}" for direction, room_name in self.exits.items()])
-        return f"Available exits: [{exits_str}]"
+        return self.exits.items()

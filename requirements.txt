@@ -1,4 +1,8 @@
-networkx == 3.1
-matplotlib == 3.7.2
+networkx
+matplotlib
 ruff
 black
+gradio
+openai
+langchain
+python-dotenv

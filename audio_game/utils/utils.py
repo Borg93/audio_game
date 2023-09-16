@@ -7,6 +7,7 @@ def pretty_print(response):
         print("\nRoom Information:")
         print("  Name:", response["current_room"].name)
         print("  Description:", response["current_room"].description)
+        print("  Exist:", response["current_exits"])
         print(
             "  Items:",
             ", ".join([item.name for item in response["current_room"].items]),
@@ -14,18 +15,7 @@ def pretty_print(response):
         print("  NPCs:", ", ".join([npc.name for npc in response["current_room"].npcs]))
         print(
             "  Containers:",
-            ", ".join(
-                [container.name for container in response["current_room"].containers]
-            ),
-        )
-        print(
-            "  Exits:",
-            ", ".join(
-                [
-                    f"{direction} to {room_name}"
-                    for direction, room_name in response["current_room"].exits.items()
-                ]
-            ),
+            ", ".join([container.name for container in response["current_room"].containers]),
         )
 
     # Player Information

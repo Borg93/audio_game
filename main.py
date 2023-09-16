@@ -8,6 +8,7 @@ from audio_game.game_state import GameState
 
 from audio_game.components.commands.inspect_command import InspectCommand
 from audio_game.components.commands.pick_up_command import PickUpCommand
+from audio_game.components.commands.move_command import MoveCommand
 
 #     DropCommand,
 #     TalkCommand,
@@ -52,14 +53,14 @@ if __name__ == "__main__":
 
     # Player inspect the shelf to discover the uniform
 
-    game.take_action(
-        InspectCommand(
-            player=game_state.player,
-            room=game_state.current_room_location,
-            target_name="shelf",
-        )
-    )
-    pretty_print(game_state.state)
+    # game.take_action(
+    #     InspectCommand(
+    #         player=game_state.player,
+    #         room=game_state.current_room_location,
+    #         target_name="shelf",
+    #     )
+    # )
+    # pretty_print(game_state.state)
 
     # # Player picks up the uniform from the shelf
     # game.take_action(
@@ -71,11 +72,32 @@ if __name__ == "__main__":
     #     )
     # )
 
-    # pretty_print(game_state.get_state())
+    # pretty_print(game_state.state)
 
-    # # Player moves to "The Control Room"
-    # response = game.take_action(MoveCommand(game, direction="n"))
-    # pretty_print(response)
+    # Player moves to "The Control Room"
+    game.take_action(MoveCommand(player=game_state.player, room=game_state.current_room_location, direction="n"))
+
+    pretty_print(game_state.state)
+
+    game.take_action(MoveCommand(player=game_state.player, room=game_state.current_room_location, direction="e"))
+
+    pretty_print(game_state.state)
+
+    game.take_action(MoveCommand(player=game_state.player, room=game_state.current_room_location, direction="w"))
+
+    pretty_print(game_state.state)
+
+
+
+
+
+
+
+
+
+
+
+
 
     # # Player talks to the guard to get the ID card
     # response = game.take_action(TalkCommand(game, npc_name="guard"))

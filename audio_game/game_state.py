@@ -12,7 +12,8 @@ class GameState:
 
     def initialize_state(self):
         self.state = {
-            "current_room": None,
+            "current_room": self.current_room_location,
+            "current_exits": self.available_exits,
             "player_inventory": self.player.inventory,
             "command_taken": "",
             "current_action": "",
@@ -28,6 +29,7 @@ class GameState:
             self.state["command_taken"] = command_name
 
         self.state["current_room"] = self.current_room_location
+        self.state["current_exits"] = self.available_exits
         self.state["player_inventory"] = self.player.inventory
 
         if self.state["current_room"] is None:
@@ -40,6 +42,14 @@ class GameState:
     @property
     def current_room_location_name(self):
         return self.current_room_location.name if self.current_room_location else None
+
+    @property
+    def available_exits(self):
+        current_room = self.current_room_location
+        if current_room is not None:
+            return current_room.exits
+        else:
+            return "No available exits."
 
     def add_to_inventory(self, item):
         self.player.inventory.append(item)
