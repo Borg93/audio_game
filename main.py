@@ -14,6 +14,7 @@ from components.commands.pick_up_command import PickUpCommand
 #     MoveCommand,
 #     UseCommand,
 # )
+
 from game_objects.game_data import game_data
 
 from game_objects.game_object_factory import (
@@ -57,7 +58,9 @@ if __name__ == "__main__":
 
     game.take_action(
         InspectCommand(
-            game_state.player, game_state.current_room_location, target_name="shelf"
+            player=game_state.player,
+            room=game_state.current_room_location,
+            target_name="shelf",
         )
     )
     pretty_print(game_state.state)

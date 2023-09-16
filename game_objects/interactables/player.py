@@ -18,3 +18,13 @@ class Player:
 
     def __repr__(self):
         return self.__str__()
+
+    def find_item(self, item_name):
+        return next((item for item in self.inventory if item.name == item_name), None)
+
+    def inventory_summary(self):
+        items_str = ", ".join([item.name for item in self.inventory])
+        return f"Your inventory contains: {items_str}."
+
+    def current_location(self, rooms):
+        return next((room for room in rooms if room.name == self.location), None)

@@ -1,4 +1,7 @@
 from typing import List, Dict
+from .item import Item
+from .container import Container
+from .npc import NPC
 
 
 class Room:
@@ -6,9 +9,9 @@ class Room:
         self.name = name
         self.description = description
         self.exits: Dict[str, str] = {}
-        self.items: List["Item"] = []
-        self.containers: List["Container"] = []
-        self.npcs: List["NPC"] = []
+        self.items: List[Item] = []
+        self.containers: List[Container] = []
+        self.npcs: List[NPC] = []
 
     def __str__(self):
         items_str = ", ".join([item.name for item in self.items])
@@ -29,11 +32,35 @@ class Room:
     def __repr__(self):
         return self.__str__()
 
-    def set_items(self, items):
-        self.items = items
+    def find_item(self, item_name):
+        return next((item for item in self.items if item.name == item_name), None)
 
-    def set_containers(self, containers):
-        self.containers = containers
+    def find_container(self, container_name):
+        return next(
+            (
+                container
+                for container in self.containers
+                if container.name == container_name
+            ),
+            None,
+        )
 
-    def set_npcs(self, npcs):
-        self.npcs = npcs
+    def find_npc(self, npc_name):
+        return next((npc for npc in self.npcs if npc.name == npc_name), None)
+
+    def description_summary(self):
+        items_str = ", ".join([item.name for item in self.items])
+        npcs_str = ", ".join([npc.name for npc in self.npcs])
+        containers_str = ", ".join([container.name for container in self.containers])
+        return (
+            f"Items: [{items_str}], NPCs: [{npcs_str}], Containers: [{containers_str}]"
+        )
+
+    def available_exits(self):
+        exits_str = ", ".join(
+            [
+                f"{direction} to {room_name}"
+                for direction, room_name in self.exits.items()
+            ]
+        )
+        return f"Available exits: [{exits_str}]"
