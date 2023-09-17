@@ -2,7 +2,9 @@ networkx
 matplotlib
 ruff
 black
-gradio
+gradio==3.44.3
 openai
 langchain
 python-dotenv
+
+

@@ -1,10 +1,8 @@
 from langchain.chat_models import ChatOpenAI
 from langchain.schema import AIMessage, HumanMessage
-from langchain.agents import initialize_agent
+from langchain.agents import initialize_agent, AgentType
 from langchain.memory import ConversationBufferWindowMemory
-from langchain.agents import Tool
-
-from custom_tooling import MoveTool
+from langchain.tools import BaseTool
 
 import openai
 import gradio as gr
@@ -30,19 +28,13 @@ from audio_game.game_objects.game_object_factory import (
 load_dotenv()
 
 
-def chat_response(input_text):
-    response = agent_chain.run(input=input_text)
+def chat_response(input_text, history):
+    game_context = """This is an game an you are the narrator of the game.
+      First reply will be the initial context to start the conversation.
+      Only use tools if you need to. 
+      """
+    response = agent_chain.run(input=f"game_context: {game_context} input: {input_text} context: {game_state.state}")
     return response
-
-
-def predict(message, history):
-    history_langchain_format = []
-    for human, ai in history:
-        history_langchain_format.append(HumanMessage(content=human))
-        history_langchain_format.append(AIMessage(content=ai))
-    history_langchain_format.append(HumanMessage(content=message))
-    gpt_response = llm(history_langchain_format)
-    return gpt_response.content
 
 
 def intialize_game():
@@ -68,31 +60,48 @@ def intialize_game():
     return game, game_state, viz
 
 
+desc = (
+    "Use this tool when you need to Move between rooms. "
+    "Dont use this tool when you only need to know where currently are. Than just check your context instead"
+    "To use the tool, you must parse the direction from the message, following parameters is: "
+    "['direction']."
+    "Possible values for direction is n, s, e, w."
+    "Example of input to tool: n"
+    "return current room and current exits from the response."
+)
+
+
+class MoveTool(BaseTool):
+    name = "Audio_game Interact"
+    description = desc
+
+    def _run(self, direction):
+        game.take_action(
+            MoveCommand(player=game_state.player, room=game_state.current_room_location, direction=direction)
+        )
+        return str(game_state.state)
+
+    def _arun(self, direction):
+        raise NotImplementedError("This tool does not support async")
+
+
 if __name__ == "__main__":
     game, game_state, viz = intialize_game()
 
-    tools = [MoveTool(game, game_state)]
+    tools = [MoveTool()]
 
-    memory = ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=2)
+    # memory = ConversationBufferWindowMemory(memory_key="chat_history", return_messages=True, k=2)
 
     llm = ChatOpenAI(temperature=0, model="gpt-3.5-turbo-0613")
     agent_chain = initialize_agent(
         tools,
         llm,
-        agent="chat-conversational-react-description",
+        agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,  # "chat-conversational-react-description",
         verbose=True,
-        memory=memory,
+        # memory=memory,
         max_iterations=3,
         early_stopping_method="generate",
     )
-
-    # Player starts in "The Closet"
-    # viz.show_graph()
-    # pretty_print(game_state.state)
-
-    # game.take_action(MoveCommand(player=game_state.player, room=game_state.current_room_location, direction="n"))
-
-    # pretty_print(game_state.state)
 
     gr.ChatInterface(
         chat_response,
